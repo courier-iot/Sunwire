@@ -1,0 +1,51 @@
+name: Build APK
+on:
+  push:
+    branches: [main, "**"] # main, and any other branch you push to
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+      - name: Fetch the Tech font (Rajdhani, SIL Open Font Licence)
+        run: |
+          SETTINGS=$(find . -name settings.gradle.kts -not -path "./.git/*" | head -n 1)
+          FONTS="$(dirname "$SETTINGS")/app/src/main/assets/fonts"
+          mkdir -p "$FONTS"
+          # pinned to one exact version of the google/fonts repository so the file names cannot change under us
+          BASE="https://raw.githubusercontent.com/google/fonts/2796410152d4f9524b68ed46e69c1b60f8e0f7c3/ofl/rajdhani"
+          ok=1
+          for f in Rajdhani-Regular Rajdhani-Medium Rajdhani-Bold; do
+            curl -fsSL --retry 3 --retry-delay 2 "$BASE/$f.ttf" -o "$FONTS/$f.ttf" || { echo "Download failed for $f"; ok=0; }
+            if [ ! -s "$FONTS/$f.ttf" ] || [ "$(stat -c%s "$FONTS/$f.ttf")" -lt 20000 ]; then ok=0; fi
+          done
+          if [ "$ok" = 1 ]; then
+            echo "Tech font downloaded."
+          else
+            echo "::warning::The Tech font could not be downloaded, so this build has no Tech font."
+            rm -f "$FONTS"/Rajdhani-*.ttf
+          fi
+          ls -la "$FONTS"
+      - name: Build
+        run: |
+          SETTINGS=$(find . -name settings.gradle.kts -not -path "./.git/*" | head -n 1)
+          cd "$(dirname "$SETTINGS")"
+          gradle assembleDebug --no-daemon --console=plain > build.log 2>&1 || {
+            echo "=== COMPILER ERRORS ==="
+            grep -E "^e: " build.log
+            echo "=== LAST LINES OF THE LOG ==="
+            tail -n 60 build.log
+            exit 1
+          }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sunwire-apk
+          path: "**/build/outputs/apk/debug/*.apk"
