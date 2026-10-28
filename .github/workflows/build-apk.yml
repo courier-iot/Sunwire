@@ -34,7 +34,7 @@ jobs:
             rm -f "$FONTS"/Rajdhani-*.ttf
           fi
           ls -la "$FONTS"
-                - name: Build
+      - name: Build
         run: |
           SETTINGS=$(find . -name settings.gradle.kts -not -path "./.git/*" | head -n 1)
           cd "$(dirname "$SETTINGS")"
@@ -47,3 +47,7 @@ jobs:
             tail -n 80 build.log
             exit 1
           }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sunwire-apk
+          path: "**/build/outputs/apk/debug/*.apk"
