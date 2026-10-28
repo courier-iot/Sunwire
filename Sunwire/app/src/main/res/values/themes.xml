@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The window behind Compose. Dark forest night, so there is no white flash while the launcher starts. -->
+    <style name="Theme.Sunwire" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/sunwire_night</item>
+        <item name="android:statusBarColor">@color/sunwire_night</item>
+        <item name="android:navigationBarColor">@color/sunwire_night</item>
+        <item name="android:colorAccent">@color/sunwire_sun</item>
+    </style>
+</resources>

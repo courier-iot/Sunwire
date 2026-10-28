@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Sunwire icon: a sun whose roots are circuit traces, with a leaf growing beside them. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- sun rays -->
+    <path
+        android:strokeColor="#FFFFE08A"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M54,22 L54,28 M34.2,30.2 L38.4,34.4 M73.8,30.2 L69.6,34.4 M26,50 L32,50 M76,50 L82,50" />
+
+    <!-- sun disc -->
+    <path
+        android:fillColor="#FFE8B83A"
+        android:pathData="M54,36 A14,14 0 1,1 53.99,36 Z" />
+    <path
+        android:fillColor="#FFFFE08A"
+        android:pathData="M54,42 A8,8 0 1,1 53.99,42 Z" />
+
+    <!-- circuit roots -->
+    <path
+        android:strokeColor="#FF00E5FF"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M54,64 L54,72 L45,81 M54,72 L63,81 M54,72 L54,84" />
+    <path
+        android:fillColor="#FF00E5FF"
+        android:pathData="M45,78.5 A2.5,2.5 0 1,1 44.99,78.5 Z M63,78.5 A2.5,2.5 0 1,1 62.99,78.5 Z M54,81.5 A2.5,2.5 0 1,1 53.99,81.5 Z" />
+
+    <!-- leaf -->
+    <path
+        android:fillColor="#FF6CC48A"
+        android:pathData="M34,80 Q30,66 42,62 Q44,74 34,80 Z" />
+    <path
+        android:strokeColor="#FF0E1410"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"
+        android:pathData="M34,80 L40,66" />
+</vector>

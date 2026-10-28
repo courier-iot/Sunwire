@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="sunwire_night">#FF0E1410</color>
+    <color name="sunwire_sun">#FFE8B83A</color>
+    <color name="sunwire_leaf">#FF6CC48A</color>
+    <color name="sunwire_cyan">#FF00E5FF</color>
+</resources>
