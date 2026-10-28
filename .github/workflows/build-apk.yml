@@ -34,18 +34,16 @@ jobs:
             rm -f "$FONTS"/Rajdhani-*.ttf
           fi
           ls -la "$FONTS"
-      - name: Build
+                - name: Build
         run: |
           SETTINGS=$(find . -name settings.gradle.kts -not -path "./.git/*" | head -n 1)
           cd "$(dirname "$SETTINGS")"
           gradle assembleDebug --no-daemon --console=plain > build.log 2>&1 || {
             echo "=== COMPILER ERRORS ==="
-            grep -E "^e: " build.log
+            grep -E "^e: " build.log || echo "(none, so the problem is not in the Kotlin code)"
+            echo "=== WHAT WENT WRONG ==="
+            grep -A 25 -E "What went wrong|FAILURE:|AAPT|error:" build.log || true
             echo "=== LAST LINES OF THE LOG ==="
-            tail -n 60 build.log
+            tail -n 80 build.log
             exit 1
           }
-      - uses: actions/upload-artifact@v4
-        with:
-          name: sunwire-apk
-          path: "**/build/outputs/apk/debug/*.apk"
